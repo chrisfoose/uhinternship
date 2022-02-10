@@ -1,0 +1,420 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE DATABASE studentdb;
+
+	use studentdb;
+
+-- -----------------------------------------------------
+-- Schema studentdb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema studentdb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS studentdb DEFAULT CHARACTER SET utf8 ;
+USE studentdb ;
+
+-- -----------------------------------------------------
+-- Table studentdb.student
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.student (
+  idStudent INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  firstName VARCHAR(45) NULL,
+  lastName VARCHAR(45) NULL,
+  address VARCHAR(45) NULL,
+  phone VARCHAR(45) NULL,
+  studentEmail VARCHAR(45) NULL,
+  personalEmail VARCHAR(45) NULL,
+  interest VARCHAR(45) NULL,
+  active BIT(0) NULL,
+  program VARCHAR(45) NULL,
+  CA BIT(0) NULL,
+  CO BIT(0) NULL,
+  ASS BIT(0) NULL
+  );
+
+
+
+
+-- -----------------------------------------------------
+-- Table studentdb.Notes
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.Notes (
+  idNotes INT NOT NULL AUTO_INCREMENT,
+  idStudent INT NULL,
+  PRIMARY KEY (idNotes),
+  UNIQUE INDEX idNotes_UNIQUE (idNotes ASC) VISIBLE,
+  UNIQUE INDEX idStudent_UNIQUE (idStudent ASC) VISIBLE,
+  CONSTRAINT idStudent
+    FOREIGN KEY (idStudent)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.jobs
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.jobs (
+  idjobs INT UNSIGNED NOT NULL,
+  idStudent INT NULL,
+  jobActive TINYINT(1) NULL,
+  PRIMARY KEY (idjobs),
+  UNIQUE INDEX idStudent_UNIQUE (idStudent ASC) VISIBLE,
+  CONSTRAINT idStudent
+    FOREIGN KEY (idStudent)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.graduated
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.graduated (
+  idgraduated TINYINT(1) NOT NULL,
+  idStudent INT NOT NULL,
+  PRIMARY KEY (idStudent),
+  CONSTRAINT idStudent
+    FOREIGN KEY (idStudent)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.internship
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.internship (
+  idinternship INT UNSIGNED NOT NULL,
+  idStudent INT NULL,
+  internshipCompany VARCHAR(45) NULL,
+  internshipSemester VARCHAR(45) NULL,
+  PRIMARY KEY (idinternship),
+  INDEX idStudent_idx (idStudent ASC) VISIBLE,
+  CONSTRAINT idStudent
+    FOREIGN KEY (idStudent)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.courseSubstitutions
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.courseSubstitutions (
+  idcourseSubstitutions INT UNSIGNED NOT NULL,
+  courseSubstitutionsClass VARCHAR(45) NULL,
+  idStudent INT NULL,
+  PRIMARY KEY (idcourseSubstitutions),
+  INDEX idStudent_idx (idStudent ASC) VISIBLE,
+  CONSTRAINT idStudent
+    FOREIGN KEY (idStudent)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.ics101
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.ics101 (
+  idics101 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idics101),
+  UNIQUE INDEX idics101_UNIQUE (idics101 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its103
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its103 (
+  idits103 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idits103),
+  UNIQUE INDEX idits103_UNIQUE (idits103 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its104
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its104 (
+  idits104 INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idits104),
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.acc201
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.acc201 (
+  idacc201 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idacc201),
+  UNIQUE INDEX idacc201_UNIQUE (idacc201 ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (idacc201)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT lastName
+    FOREIGN KEY ()
+    REFERENCES studentdb.student ()
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.eng102
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.eng102 (
+  ideng102 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (ideng102),
+  UNIQUE INDEX ideng102_UNIQUE (ideng102 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its108
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its108 (
+  idits108 INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idits108),
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its118
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its118 (
+  idits118 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  its118col VARCHAR(45) NULL,
+  PRIMARY KEY (idits118),
+  UNIQUE INDEX idits118_UNIQUE (idits118 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its121
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its121 (
+  idits121 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idits121),
+  UNIQUE INDEX idits121_UNIQUE (idits121 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.eng100
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.eng100 (
+  ideng100 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (ideng100),
+  UNIQUE INDEX ideng100_UNIQUE (ideng100 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.math100
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.math100 (
+  idmath100 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idmath100),
+  UNIQUE INDEX idmath100_UNIQUE (idmath100 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its129
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its129 (
+  idits129 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idits129),
+  UNIQUE INDEX idits129_UNIQUE (idits129 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its215
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its215 (
+  idits215 INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idits215))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its218
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its218 (
+  idits218 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idits218),
+  UNIQUE INDEX idits218_UNIQUE (idits218 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.spco151
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.spco151 (
+  idspco151 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  PRIMARY KEY (idspco151),
+  UNIQUE INDEX idspco151_UNIQUE (idspco151 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its124
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its124 (
+  idits124 INT NOT NULL AUTO_INCREMENT,
+  studentID INT NULL,
+  its124col VARCHAR(45) NULL,
+  PRIMARY KEY (idits124),
+  UNIQUE INDEX idits124_UNIQUE (idits124 ASC) VISIBLE,
+  INDEX studentID_idx (studentID ASC) VISIBLE,
+  CONSTRAINT studentID
+    FOREIGN KEY (studentID)
+    REFERENCES studentdb.student (idStudent)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its221
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its221 (
+  idits221 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idits221),
+  UNIQUE INDEX idits221_UNIQUE (idits221 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its287
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its287 (
+  idits287 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idits287),
+  UNIQUE INDEX idits287_UNIQUE (idits287 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.its288
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.its288 (
+  idits288 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idits288),
+  UNIQUE INDEX idits288_UNIQUE (idits288 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.ics281
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.ics281 (
+  idics281 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idics281),
+  UNIQUE INDEX idics281_UNIQUE (idics281 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.ics282
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.ics282 (
+  idics282 INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idics282),
+  UNIQUE INDEX idics282_UNIQUE (idics282 ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table studentdb.Program
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS studentdb.Program (
+  idProgram INT NOT NULL AUTO_INCREMENT,
+  year YEAR(4) NULL,
+  PRIMARY KEY (idProgram),
+  UNIQUE INDEX idProgram_UNIQUE (idProgram ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
